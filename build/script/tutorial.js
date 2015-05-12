@@ -14,3 +14,24 @@
   };
 
 }).call(this);
+
+(function() {
+  var CommentBox;
+
+  CommentBox = React.createClass({
+    render: function() {
+      return React.createElement("div", {
+        "className": "commentList"
+      }, "Hello, world! I am a CommentList.");
+    }
+  });
+
+  CommentBox = React.createClass({
+    render: function() {
+      return React.createElement("div", {
+        "className": "commentForm"
+      }, "Hello, world! I am a CommentForm.");
+    }
+  });
+
+}).call(this);
