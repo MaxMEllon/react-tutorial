@@ -1,52 +1,18 @@
 (function() {
-  var CommentBox;
+  var CommentList;
 
-  CommentBox = React.createClass({
-    render: function() {
-      return React.createElement("div", {
-        "className": "commentBox"
-      }, "Hello, world! I am a CommentBox.");
-    }
-  });
-
-  window.onload = function() {
-    return React.render(React.createElement(CommentBox, null), document.getElementById('content'));
-  };
-
-}).call(this);
-
-(function() {
-  var CommentBox;
-
-  CommentBox = React.createClass({
+  CommentList = React.createClass({
     render: function() {
       return React.createElement("div", {
         "className": "commentList"
-      }, "Hello, world! I am a CommentList.");
+      }, React.createElement(Comment, {
+        "author": "Pete Hunt"
+      }, "This is one comment"), React.createElement(Comment, {
+        "author": "Jordan Walke"
+      }, "This is *another* comment"));
     }
   });
 
-  CommentBox = React.createClass({
-    render: function() {
-      return React.createElement("div", {
-        "className": "commentForm"
-      }, "Hello, world! I am a CommentForm.");
-    }
-  });
-
-}).call(this);
-
-(function() {
-  var CommentBox;
-
-  CommentBox = React.createClass({
-    render: function() {
-      return React.createElement("div", {
-        "className": "commentBox"
-      }, React.createElement("h1", null, "Comments"), React.createElement(CommentList, null), React.createElement(CommentForm, null));
-    }
-  });
-
-  React.render(React.createElement(CommentBox, null), $content);
+  React.render(React.createElement(CommentList, null), $content);
 
 }).call(this);

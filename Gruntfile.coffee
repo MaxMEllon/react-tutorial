@@ -18,7 +18,7 @@ module.exports = (grunt) ->
 
     cjsx:
       build:
-        src: "src/coffee-react/*.cjsx"
+        src: ["src/coffee-react/*.cjsx", "!src/coffee-react/_*.cjsx"]
         dest: "build/script/tutorial.js"
 
     csslint:
