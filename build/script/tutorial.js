@@ -1,18 +1,24 @@
 (function() {
-  var CommentList;
+  var Comment;
 
-  CommentList = React.createClass({
+  Comment = React.createClass({
     render: function() {
+      var rawMarkup;
+      rawMarkup = marked(this.props.children.toString(), {
+        sanitize: true
+      });
       return React.createElement("div", {
-        "className": "commentList"
-      }, React.createElement(Comment, {
-        "author": "Pete Hunt"
-      }, "This is one comment"), React.createElement(Comment, {
-        "author": "Jordan Walke"
-      }, "This is *another* comment"));
+        "className": 'comment'
+      }, React.createElement("h2", {
+        "className": 'commentAuther'
+      }, this.props.auther), "\x3Cspan dangerouslySetInnerHTML=", {
+        __html: rawMarkup
+      });
     }
   });
 
-  React.render(React.createElement(CommentList, null), $content);
+  window.onload = function() {
+    return React.render(React.createElement(Comment, null), document.getElementById('content'));
+  };
 
 }).call(this);
