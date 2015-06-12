@@ -1,24 +1,86 @@
 (function() {
-  var Comment;
+  var Todo, TodoList,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  Comment = React.createClass({
-    render: function() {
-      var rawMarkup;
-      rawMarkup = marked(this.props.children.toString(), {
-        sanitize: true
-      });
-      return React.createElement("div", {
-        "className": 'comment'
-      }, React.createElement("h2", {
-        "className": 'commentAuther'
-      }, this.props.auther), "\x3Cspan dangerouslySetInnerHTML=", {
-        __html: rawMarkup
-      });
+  Todo = (function(_super) {
+    __extends(Todo, _super);
+
+    function Todo() {
+      this._onDelete = __bind(this._onDelete, this);
+      return Todo.__super__.constructor.apply(this, arguments);
     }
-  });
 
-  window.onload = function() {
-    return React.render(React.createElement(Comment, null), document.getElementById('content'));
-  };
+    Todo.propTypes = {
+      todo: React.PropTypes.shape({
+        id: React.PropTypes.number.isRequired,
+        text: React.PropTypes.string.isRequired
+      }),
+      onDelete: React.PropTypes.func.isRequired
+    };
+
+    Todo.prototype._onDelete = function() {
+      return this.props.onDelete(this.props.todo.id);
+    };
+
+    Todo.prototype.render = function() {
+      return React.createElement("div", null, React.createElement("span", null, this.props.todo.text), React.createElement("button", {
+        "onClick": this._onDelete
+      }, "delete"));
+    };
+
+    return Todo;
+
+  })(React.Component);
+
+  TodoList = (function(_super) {
+    __extends(TodoList, _super);
+
+    function TodoList() {
+      this.state = {
+        todos: [
+          {
+            id: 1,
+            text: 'todo 1'
+          }, {
+            id: 2,
+            text: 'todo 2'
+          }, {
+            id: 3,
+            text: 'todo 3'
+          }
+        ]
+      };
+    }
+
+    TodoList.prototype.deleteTodo = function(id) {
+      return this.setState({
+        todos: this.state.todos.filter(function(todo) {
+          return todo.id !== id;
+        })
+      });
+    };
+
+    TodoList.prototype.render = function() {
+      var todos;
+      todos = this.state.todos.map((function(_this) {
+        return function(todo) {
+          return React.createElement("li", {
+            "key": todo.id
+          }, React.createElement(Todo, {
+            "onDelete": _this.deleteTodo,
+            "todo": todo
+          }));
+        };
+      })(this));
+      return React.createElement("ul", null, todos);
+    };
+
+    return TodoList;
+
+  })(React.Component);
+
+  React.render(React.createElement(TodoList, null), $('.container')[0]);
 
 }).call(this);

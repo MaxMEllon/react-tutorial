@@ -38,7 +38,7 @@ module.exports = (grunt) ->
     connect:
       server:
         options:
-          port: 3001
+          port: 3000
 
 
   # plugin
