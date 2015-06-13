@@ -17,11 +17,11 @@ class Todo extends React.Component
 
 class TodoList extends React.Component
   constructor: ->
-    @state = todos: [
+    @state = { todos: [
       {id: 1, text: 'todo 1'},
       {id: 2, text: 'todo 2'},
       {id: 3, text: 'todo 3'}
-    ]
+    ] }
 
   deleteTodo: (id) ->
     @setState
