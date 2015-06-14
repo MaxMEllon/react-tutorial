@@ -33,4 +33,3 @@ class TodoList extends React.Component
       <li key={todo.id}><Todo onDelete={@deleteTodo} todo={todo} /></li>
     <ul>{todos}</ul>
 
-React.render <TodoList />, $('.container')[0]

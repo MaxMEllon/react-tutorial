@@ -126,6 +126,69 @@
 
   })(React.Component);
 
-  React.render(React.createElement(TodoList, null), $('.container')[0]);
+}).call(this);
+
+(function() {
+  var CommentBox, CommentForm, CommentList;
+
+  CommentList = React.createClass({
+    render: function() {
+      var commentNodes;
+      commentNodes = this.props.data.map(function(comment) {
+        return React.createElement(Comment, {
+          "author": comment.author
+        }, comment.text);
+      });
+      return React.createElement("div", {
+        "className": "commentList"
+      }, commentNodes);
+    }
+  });
+
+  CommentForm = React.createClass({
+    render: function() {
+      return React.createElement("div", {
+        "className": "commentForm"
+      }, "Hello, React! I am a CommentForm.");
+    }
+  });
+
+  CommentBox = React.createClass({
+    getInitialState: function() {
+      return {
+        data: []
+      };
+    },
+    componentDidMount: function() {
+      var jpxhr;
+      jpxhr = $.ajax({
+        url: this.props.url,
+        dataType: "jsonp"
+      });
+      return jpxhr.done((function(_this) {
+        return function(res) {
+          _this.setState;
+          return {
+            data: res
+          };
+        };
+      })(this)).fail((function(_this) {
+        return function(xhr, status, err) {
+          return console.error(_this.props.url, status, err.toString());
+        };
+      })(this));
+    },
+    render: function() {
+      return React.createElement("div", {
+        "className": "commentBox"
+      }, React.createElement(CommentList, {
+        "data": this.state.data
+      }), React.createElement(CommentForm, null));
+    }
+  });
+
+  React.render(React.createElement(CommentBox, {
+    "url": "../sample_data/makejson.php"
+  }), $('.container')[0]);
 
 }).call(this);
